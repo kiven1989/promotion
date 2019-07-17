@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- 为移动设备添加 viewport -->
+    <meta
+      name="viewport"
+      content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"
+    />
+    <!-- iOS 忽略页面中的数字识别为电话，忽略email识别 -->
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <!--开启对web app程序的支持-->
+    <meta name="apple-touch-fullscreen" content="YES" />
+    <!-- 是否启用 WebApp全屏模式，删除苹果默认的工具栏和菜单栏 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- 设置苹果工具栏颜色 -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>发布页面</title>
+    <!-- <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" href="./css/publish.css" /> -->
+  </head>
+  <body>
+    <div class="publish">
+      <ul>
+        <li class="require">
+          <label>行业</label>
+          <span>商业推广</span>
+        </li>
+        <li class="require">
+          <label>联系人</label>
+          <input
+            type="text"
+            class="contacts"
+            placeholder="联系人"
+            maxlength="10"
+          />
+        </li>
+        <li class="upload require">
+          <label>图片上传</label>
+          <input
+            type="file"
+            id="file"
+            style="display: none;"
+            multiple="multiple"
+            accept="image/*"
+          />
+          <dl class="uploadZone">
+            <!-- <dd>
+              <svg class="icon close" aria-hidden="true">
+                <use xlink:href="#icon-close"></use>
+              </svg>
+            </dd> -->
+            <dt>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-add"></use>
+              </svg>
+            </dt>
+          </dl>
+        </li>
+        <li class="upload text-area require">
+          <label></label>
+          <textarea
+            class="textArea"
+            placeholder="介绍服务内容"
+            cols="30"
+            rows="10"
+            maxlength="500"
+          ></textarea>
+          <em class="textAreaNum">0/500</em>
+        </li>
+      </ul>
+      <span class="btn confirmPublish">确定发布</span>
+    </div>
+    <!-- 通用浮层 -->
+    <div class="roof">
+      <div class="mask"></div>
+    </div>
+    <!-- 通用浮层 -->
+
+    <script src="//at.alicdn.com/t/font_1256041_hdcujjfa43h.js" defer></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  </body>
+</html>

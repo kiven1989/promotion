@@ -1,0 +1,45 @@
+html,body{
+  background: #eee;
+}
+.personal_info{
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding: 20px 10px;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color:#fff;
+}
+.avatar_wrap{
+  display:flex;
+  align-items: center;
+}
+.avatar{
+  width: 50px;
+  height: 50px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  margin-right: 10px;
+  overflow: hidden;
+}
+.avatar img{
+  width: 100%;
+}
+.personal_list{
+  display:flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+.personal_list dd{
+  display:flex;
+  border-bottom: 1px solid #ccc;
+  padding: 14px 10px;
+  justify-content: space-between;
+  background-color:#fff;
+}
+.personal_list dt{
+  margin: 20px 0;
+  background-color:#fff;
+  padding: 14px 0;
+  text-align: center;
+}

@@ -1,0 +1,212 @@
+.roof{
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index: 99;
+  display: none;
+}
+.roof .cont{
+  padding: 20px 10px;
+  background:#fff;
+}
+.roof_show{
+  display:block;
+}
+.mask{
+  position: absolute;
+  width:100%;
+  height: 100%;
+  background:rgba(0,0,0,.6);
+  opacity: 0;
+  transition:.4s;
+  transition-delay: .5s;
+}
+.require label::before{
+  content: '*';
+  color:red;
+  padding-right:4px;
+}
+.tag{
+  font-style: normal;
+    background-color: #ababff;
+    color: #fff;
+    border-radius: 3px;
+    padding: 2px 6px;
+    text-align: center;
+    width: 60px;
+    box-sizing: border-box;
+}
+.roof_show .mask{
+  opacity: 1;
+}
+.btn{
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  background-color: #af84f5;
+  color: #fff;
+  border-radius: 40px;
+  text-align: center;
+}
+/*
+*@autor: wangjun
+*@date:2019-07-04 23:29:14
+*@description: 图片盒子
+*/
+.img-box{
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+/*
+*@autor: wangjun
+*@date:2019-06-28 00:09:13
+*@description: 文本区域
+*/
+.business_cont {
+  padding: 10px 0 10px 40px;
+}
+.business_cont .article {
+  text-align: justify;
+}
+.business_cont span {
+  display: block;
+  width: 30%;
+  height: 70px;
+  overflow: hidden;
+  margin: 10px 10px 10px 0;
+}
+.business_cont span img {
+  width: 100%;
+}
+.business_list {
+  padding: 10px 10px 50px;
+}
+.business_list li {
+  padding: 20px 0;
+  border-bottom: 1px solid #ccc;
+}
+.business_list_tit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.business_list_tit dt {
+  display: flex;
+  align-items: center;
+}
+.business_list_tit i {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  overflow: hidden;
+}
+.business_list_tit i img {
+  width: 100%;
+}
+.business_list_tit span {
+  padding: 0 4px;
+}
+.business_list_tit dd {
+  padding: 4px 10px;
+}
+/*
+*@autor: wangjun
+*@date:2019-07-04 23:23:12
+*@description: 图片展示区域
+*/
+.img-zone{
+  display: flex;
+}
+.loading{
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+.loading svg, .loading .end-line{
+  display: none;
+}
+.loadingShow svg{
+  display: block;
+}
+.loadingEnd .end-line{
+  display: block;
+}
+.loading-icon{
+  animation:loading .4s infinite linear;
+}
+
+@keyframes loading
+{
+from {transform:rotate(0)}
+to {transform:rotate(360deg)}
+}
+
+.full-loading{
+  position: fixed;
+  left: 0;
+  right:0;
+  top:0;
+  bottom:0;
+  z-index: 999;
+  background:rgba(0,0,0,.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.full-loading img{
+  width:30px;
+  height: 30px;
+}
+
+/*
+*@autor: wangjun
+*@date:2019-07-06 00:17:00
+*@description: 底线
+*/
+.end-line{
+  color:#ccc;
+}
+
+/*
+*@autor: wangjun
+*@date:2019-07-06 11:40:53
+*@description: 图片预览公共样式
+*/
+.view-zone{
+  position:fixed;
+  top:0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index:9;
+  background:rgba(0,0,0,.9);
+  display:none;
+  justify-content: center;
+  align-items: center;
+}
+.view-zone-inner{
+  display: flex;
+  flex: 1;
+  width:100%;
+  height: 100%;
+  align-items: center;
+}
+.detail-view-img{
+  width: 100%;
+  height:86%;
+  color:#fff;
+}
+.box-img{
+  width:90%;
+  height: 100%;
+  margin: 0 auto;
+  background-size:contain;
+  border-radius: 6px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
