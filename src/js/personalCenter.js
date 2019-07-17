@@ -29,10 +29,9 @@ $(function() {
       console.log('loginOut')
     },
     personalListDtHandler() {
-      const text = $(this)
-        .find('span')
-        .text()
-      Message.show(text)
+      const url = $(this).data('url')
+
+      location.href = `index.html`
     }
   }
   // 脚本初始化
