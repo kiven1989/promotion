@@ -9,6 +9,7 @@ import {
   tipOffList,
   checkIsLogin
 } from './util.js'
+import { HOST } from '@/js/env'
 import 'swiper/dist/css/swiper.css'
 import '../css/reset.css'
 import '../css/common.css'
@@ -22,7 +23,6 @@ $(function() {
   const ironHandler = $('.ironHandler')
   const businessList = $('.businessList')
   const viewZone = $('.viewZone')
-  const Host = 'http://39.106.197.1'
   let mySwiper = null
   // 公共方法
   function maskHide(t) {
@@ -68,9 +68,8 @@ $(function() {
     loginServer() {
       return new Promise((resolve, reject) => {
         Loading.show()
-        debugger
         post({
-          url: `${Host}/tuiguang/com/login/login.php`,
+          url: `${HOST}/tuiguang/com/login/login.php`,
           data: {
             userName: 'wy',
             pwd: 123
@@ -153,7 +152,6 @@ $(function() {
     },
     async publishMesHandler() {
       const isLogin = await checkIsLogin()
-      debugger
       if (isLogin) {
         publishTips.addClass('roof_show')
       } else {
@@ -173,7 +171,7 @@ $(function() {
       // 调用举报接口
       // tuiguang/com/quan/report.php?quanId=0&content=1      quanid: 被举报内容id。  content： 举报类型
       get({
-        url: `${Host}/tuiguang/com/quan/report.php`,
+        url: `${HOST}/tuiguang/com/quan/report.php`,
         data: {
           quanId: id,
           content: typeId
@@ -225,7 +223,7 @@ $(function() {
         ${data.imgs
           .map((imgUrl, index) => {
             return `
-          <span class="img-box" data-index="${index}" style="background-image:url(${Host}/tuiguang/${imgUrl})">
+          <span class="img-box" data-index="${index}" style="background-image:url(${HOST}/tuiguang/${imgUrl})">
           </span>
           `
           })
@@ -246,7 +244,7 @@ $(function() {
 
       // 初试化图片预览控件
       const imgs = data.imgs.map(imgUrl => {
-        return `${Host}/tuiguang/${imgUrl}`
+        return `${HOST}/tuiguang/${imgUrl}`
       })
       this.initViewImg(imgs)
     },
@@ -259,7 +257,7 @@ $(function() {
 
       // 已经id获取详情
       get({
-        url: `${Host}/tuiguang/com/quan/quanService.php`,
+        url: `${HOST}/tuiguang/com/quan/quanService.php`,
         dataType: 'json',
         data: {
           act: 'select',

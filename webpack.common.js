@@ -50,7 +50,12 @@ module.exports = {
     filename: 'js/[name].[chunkhash].js',
     path: path.resolve(__dirname, 'dist')
   },
-
+  resolve: {
+    extensions: ['.js', '.json'],
+    alias: {
+      '@': path.resolve(__dirname, 'src')
+    }
+  },
   devServer: {
     host: '0.0.0.0',
     contentBase: './dist'

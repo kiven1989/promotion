@@ -1,6 +1,7 @@
 import $ from 'jquery'
 import vconsole from 'vconsole'
-import { Message, Loading, get, post, checkIsLogin } from './util.js'
+import { Message, Loading, get, post, checkIsLogin } from '@/js/util'
+import { HOST } from '@/js/env'
 
 import '../css/reset.css'
 import '../css/common.css'
@@ -23,7 +24,6 @@ $(document).ready(function() {
   let contentHeight = 0
   let loadMoreLock = false
   let pageNum = 1
-  const Host = 'http://39.106.197.1'
 
   const myLive = {
     init() {
@@ -41,7 +41,7 @@ $(document).ready(function() {
       $('.iKnow').on('click', this.iKonwHandler)
 
       // 微信登录
-      $('.loginWeChat').on('click', this.loginWeChat)
+      $('.loginWeChat').on('click', this.loginWeChat.bind(this))
 
       // 账号登录
       $('.loginAccount').on('click', this.loginAccount.bind(this))
@@ -87,7 +87,7 @@ $(document).ready(function() {
       return new Promise((resolve, reject) => {
         Loading.show()
         post({
-          url: `${Host}/tuiguang/com/login/login.php`,
+          url: `${HOST}/tuiguang/com/login/login.php`,
           data: {
             userName: 'wy',
             pwd: 123
@@ -115,9 +115,37 @@ $(document).ready(function() {
           Message.show(JSON.stringify(error))
         })
     },
-    loginWeChat(e) {
-      e.stopPropagation()
-      alert('微信登录')
+    weChatServer() {
+      return new Promise((resolve, reject) => {
+        Loading.show()
+        post({
+          url: `http://www.qunquntui.com/tuiguang/com/wx/wx.php`
+          // url: `${HOST}/tuiguang/com/wx/wx.php`,
+          // data: {
+          //   userName: 'wy',
+          //   pwd: 123
+          // }
+        })
+          .then(res => {
+            debugger
+            Message.show('登录成功')
+            publishDialog.removeClass('roof_show')
+            Loading.hide()
+            resolve(res)
+          })
+          .catch(error => {
+            Message.show(JSON.stringify(error))
+            Loading.hide()
+            reject()
+          })
+      })
+    },
+    loginWeChat() {
+      this.weChatServer()
+        .then(res => {
+          console.log(2, res)
+        })
+        .catch(error => {})
     },
     iKonwHandler() {
       publishTips.removeClass('roof_show')
@@ -131,8 +159,19 @@ $(document).ready(function() {
         publishDialog.addClass('roof_show')
       }
     },
+    /*
+     *@author: wangjun
+     *@date: 2019-07-20 16:14:37
+     *@description: 置顶渲染函数
+     */
+    tag(item) {
+      // 如果top为1则显示置顶
+      if (item.top * 1 === 1) {
+        return `<em class="tag">置顶</em>`
+      }
+      return ''
+    },
     renderList(list) {
-      // http://39.106.197.1/tuiguang/upload/file/20190704213708mBGszd.jpeg
       const listHtmlArr = list.map(item => {
         return `
         <li data-id="${item.id}">
@@ -145,7 +184,7 @@ $(document).ready(function() {
                 />
               </i>
               <span>${item.name || '王者'}</span>
-              <em class="tag">标签</em>
+              ${this.tag(item)}
             </dt>
           </dl>
           <div class="business_cont">
@@ -154,7 +193,7 @@ $(document).ready(function() {
             ${item.imgs
               .map(imgUrl => {
                 return `
-              <span class="img-box" style="background-image:url(${Host}/tuiguang/${imgUrl})">
+              <span class="img-box" style="background-image:url(${HOST}/tuiguang/${imgUrl})">
               </span>
               `
               })
@@ -175,7 +214,7 @@ $(document).ready(function() {
       loadingEle.addClass('loadingShow')
       // 获取列表数据
       get({
-        url: 'http://39.106.197.1/tuiguang/com/quan/quanService.php',
+        url: `${HOST}/tuiguang/com/quan/quanService.php`,
         dataType: 'json',
         data: {
           act: 'listbytype',

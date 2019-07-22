@@ -1,5 +1,6 @@
 import $ from 'jquery'
 import { Message, Loading, post } from './util.js'
+import { HOST } from '@/js/env'
 
 import '../css/reset.css'
 import '../css/common.css'
@@ -114,10 +115,11 @@ $(function() {
       })
 
       post({
-        url: 'http://39.106.197.1/tuiguang/com/quan/quanService.php',
+        url: `${HOST}/tuiguang/com/quan/quanService.php`,
         processData: false,
         contentType: false,
-        data: formData
+        data: formData,
+        cookie: true
       })
         .then(res => {
           // 发布成功
