@@ -7,9 +7,10 @@ import '../css/reset.css'
 import '../css/common.css'
 import '../css/index.css'
 
-if (process.env.NODE_ENV !== 'production') {
-  new vconsole()
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   new vconsole()
+// }
+new vconsole()
 
 $(document).ready(function() {
   const popover = $('.popover')
