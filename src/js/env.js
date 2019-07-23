@@ -7,12 +7,12 @@ const env = {
   },
   // 测试环境配置
   test: {
-    url: 'http://39.106.197.1',
+    url: 'http://www.qunquntui.com',
     HOST: ''
   },
   // 本地环境配置
   dev: {
-    HOST: 'http://39.106.197.1'
+    HOST: 'http://www.qunquntui.com'
   }
 }
 
