@@ -118,7 +118,7 @@ $(document).ready(function() {
     weChatServer() {
       return new Promise((resolve, reject) => {
         Loading.show()
-        post({
+        get({
           url: `http://www.qunquntui.com/tuiguang/com/wx/wx.php`
           // url: `${HOST}/tuiguang/com/wx/wx.php`,
           // data: {
