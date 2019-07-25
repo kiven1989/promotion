@@ -21,6 +21,8 @@ $(function() {
   const payRoof = $('.payRoof')
   const goPay = $('.goPay')
   let iNow = 0
+  // 是否需要支付标识
+  const needPay = true
 
   // 绑定textarea的change事件
   const max = textAreaNum.text().split('/')[1]
@@ -56,11 +58,42 @@ $(function() {
       textArea.on('blur', this.textAreaBlur)
 
       // 支付
-      goPay.on('click', this.goPay())
+      goPay.on('click', this.goPay.bind(this))
+    },
+    jsApiCall() {
+      WeixinJSBridge.invoke(
+        'getBrandWCPayRequest',
+          '',
+          (res) => {
+              WeixinJSBridge.log(res.err_msg);
 
+              if(res.err_msg == "get_brand_wcpay_request:ok"){
+                  payRoof.removeClass('roof_show')
+                  this.publistToServer()
+                  Message.show('支付成功');
+              }else{
+                  //返回跳转到订单详情页面
+                  Message.show('支付失败');
+                  payRoof.removeClass('roof_show')
+              }
+          }
+      );
+    },
+    callpay() {
+      if (typeof WeixinJSBridge == "undefined"){
+          if( document.addEventListener ){
+              document.addEventListener('WeixinJSBridgeReady', this.jsApiCall, false)
+          }else if (document.attachEvent){
+              document.attachEvent('WeixinJSBridgeReady', this.jsApiCall)
+              document.attachEvent('onWeixinJSBridgeReady', this.jsApiCall)
+          }
+      }else{
+          // 微信支付
+          this.jsApiCall()
+      }
     },
     goPay() {
-      alert(2)
+      this.callpay()
     },
     textAreaBlur() {
       document.body.scrollTop = 0
@@ -85,12 +118,7 @@ $(function() {
         }, 2000)
       })
     },
-    publistTo() {
-
-      // 支付拦截
-      payRoof.addClass('roof_show')
-      return
-
+    publistToServer() {
       // 获取值
       data.contacts = contacts.val()
       data.files = fileArr.map(item => {
@@ -155,6 +183,13 @@ $(function() {
             })
           }
         })
+    },
+    publistTo() {
+      if(needPay){
+        payRoof.addClass('roof_show')
+        return
+      }
+      this.publistToServer()
     },
     fileChange(e) {
       const files = e.target.files
