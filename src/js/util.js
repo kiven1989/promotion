@@ -63,19 +63,20 @@ const ajax = params => {
   return new Promise((resolve, reject) => {
     $.ajax(
       Object.assign(params, {
-        dataType: 'json',
+        dataType: params.dataType || 'json',
         timeout: 5000,
         xhrFields: {
           withCredentials: params.cookie
         },
         success(res) {
           resolve(res)
+          
         },
         error(error) {
           reject(error)
         },
         complete() {
-          resolve()
+          // resolve()
         }
       })
     )

@@ -65,4 +65,28 @@
   text-align: right;
 }
 
+.pay_wrap{
+  position: relative;
+  background:#fff;
+  width: 80%;
+  height: 100px;
+  margin: 100px auto;
+  display: flex;
+  justify-content:flex-end;
+  align-items: center;
+  padding:20px 10px 10px;
+  flex-direction: column;
+}
+
+.go_pay{
+  width: 80px;
+  height: 38px;
+  line-height: 38px;
+  text-align: center;
+  background-color: #9100ff;
+  color: #fff;
+  margin-top: 10px;
+  border-radius: 4px;
+}
+
 /* 发布页面样式 */

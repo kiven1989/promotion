@@ -25,6 +25,9 @@ $(document).ready(function() {
   let contentHeight = 0
   let loadMoreLock = false
   let pageNum = 1
+  let touchStartY = 0
+  let touchMoveY = 0
+  let touchEndY = 0
 
   const myLive = {
     init() {
@@ -55,6 +58,23 @@ $(document).ready(function() {
 
       // 加载更多
       window.onscroll = this.windowScroll.bind(this)
+
+      // 绑定下拉加载更多
+      document.body.addEventListener('touchstart', this.touchStart)
+
+      document.body.addEventListener('touchmove', this.touchMove)
+
+      document.body.addEventListener('touchend', this.touchEnd)
+    },
+    touchEnd() {
+      touchEndY = e.changedTouches[0].clientY
+    },
+    touchMove() {
+      touchMoveY = e.changedTouches[0].clientY
+      console.log('touchMoveY', touchMoveY)
+    },
+    touchStart(e) {
+      touchStartY = e.changedTouches[0].clientY
     },
     publishDialogMask() {
       publishDialog.removeClass('roof_show')
@@ -120,7 +140,8 @@ $(document).ready(function() {
       return new Promise((resolve, reject) => {
         Loading.show()
         get({
-          url: `http://www.qunquntui.com/tuiguang/com/wx/wx.php`
+          url: `http://www.qunquntui.com/tuiguang/com/wx/wx.php`,
+          dataType: 'text'
           // url: `${HOST}/tuiguang/com/wx/wx.php`,
           // data: {
           //   userName: 'wy',
@@ -128,13 +149,14 @@ $(document).ready(function() {
           // }
         })
           .then(res => {
-            debugger
-            Message.show('登录成功')
-            publishDialog.removeClass('roof_show')
-            Loading.hide()
-            resolve(res)
+            // Message.show('登录成功')
+            // publishDialog.removeClass('roof_show')
+            // Loading.hide()
+            // resolve(res)
+            // window.location.href = res
           })
           .catch(error => {
+            alert(2)
             Message.show(JSON.stringify(error))
             Loading.hide()
             reject()
@@ -142,11 +164,12 @@ $(document).ready(function() {
       })
     },
     loginWeChat() {
-      this.weChatServer()
-        .then(res => {
-          console.log(2, res)
-        })
-        .catch(error => {})
+      window.location.href = 'http://www.qunquntui.com/tuiguang/com/wx/wx.php'
+      // this.weChatServer()
+      //   .then(res => {
+      //     console.log(2, res)
+      //   })
+      //   .catch(error => {})
     },
     iKonwHandler() {
       publishTips.removeClass('roof_show')

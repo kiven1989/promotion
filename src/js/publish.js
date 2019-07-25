@@ -1,10 +1,13 @@
 import $ from 'jquery'
+import vconsole from 'vconsole'
 import { Message, Loading, post } from './util.js'
 import { HOST } from '@/js/env'
 
 import '../css/reset.css'
 import '../css/common.css'
 import '../css/publish.css'
+
+new vconsole()
 
 $(function() {
   const uploadZone = $('.uploadZone')
@@ -15,6 +18,8 @@ $(function() {
   const textArea = $('.textArea')
   const textAreaNum = $('.textAreaNum')
   const contacts = $('.contacts')
+  const payRoof = $('.payRoof')
+  const goPay = $('.goPay')
   let iNow = 0
 
   // 绑定textarea的change事件
@@ -49,6 +54,13 @@ $(function() {
 
       // 文本框失去光标事件(修复微信端弹起键盘后导致实际区域域视觉区域不一致bug)
       textArea.on('blur', this.textAreaBlur)
+
+      // 支付
+      goPay.on('click', this.goPay())
+
+    },
+    goPay() {
+      alert(2)
     },
     textAreaBlur() {
       document.body.scrollTop = 0
@@ -74,6 +86,11 @@ $(function() {
       })
     },
     publistTo() {
+
+      // 支付拦截
+      payRoof.addClass('roof_show')
+      return
+
       // 获取值
       data.contacts = contacts.val()
       data.files = fileArr.map(item => {
