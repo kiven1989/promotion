@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import vconsole from 'vconsole'
-import { Message, Loading, post } from './util.js'
+import { Message, Loading, post, get } from './util.js'
 import { HOST } from '@/js/env'
 
 import '../css/reset.css'
@@ -58,7 +58,7 @@ $(function() {
       textArea.on('blur', this.textAreaBlur)
 
       // 支付
-      goPay.on('click', this.goPay.bind(this))
+      // goPay.on('click', this.goPay.bind(this))
     },
     jsApiCall() {
       WeixinJSBridge.invoke(
@@ -92,8 +92,26 @@ $(function() {
           this.jsApiCall()
       }
     },
+    getWechatCode() {
+      return new Promise((resolve, reject) => {
+        get({
+          url: `${HOST}/tuiguang/sdk/example/jsapi.php`
+        })
+          .then(res => {
+            resolve()
+          })
+          .catch(error => {
+            reject()
+          })
+      })
+    },
     goPay() {
-      this.callpay()
+      this.getWechatCode()
+        .then(res => {
+          this.callpay()
+        }).catch(error => {
+          alert('getWechatCode error')
+        })
     },
     textAreaBlur() {
       document.body.scrollTop = 0
@@ -185,10 +203,10 @@ $(function() {
         })
     },
     publistTo() {
-      if(needPay){
-        payRoof.addClass('roof_show')
-        return
-      }
+      // if(needPay){
+      //   payRoof.addClass('roof_show')
+      //   return
+      // }
       this.publistToServer()
     },
     fileChange(e) {
