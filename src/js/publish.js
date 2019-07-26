@@ -56,9 +56,6 @@ $(function() {
 
       // 文本框失去光标事件(修复微信端弹起键盘后导致实际区域域视觉区域不一致bug)
       textArea.on('blur', this.textAreaBlur)
-
-      // 支付
-      goPay.on('click', this.goPay.bind(this))
     },
     jsApiCall() {
       WeixinJSBridge.invoke(
@@ -185,10 +182,6 @@ $(function() {
         })
     },
     publistTo() {
-      if(needPay){
-        payRoof.addClass('roof_show')
-        return
-      }
       this.publistToServer()
     },
     fileChange(e) {
