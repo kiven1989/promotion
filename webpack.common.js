@@ -36,6 +36,7 @@ const HTMLS = pages.map(page => {
     filename: `${page.pageName}.html`,
     inject: true,
     hash: false,
+    minify: true,
     chunks: [page.pageName]
   })
 })
