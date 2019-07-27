@@ -164,6 +164,76 @@ $(function() {
         cookie: true
       })
         .then(res => {
+          if (res === 1) {
+            location.replace('/tuiguang/sdk/example/jsapi.php')
+            return
+          }
+          // // 发布成功
+          // Message.show('发布成功')
+          // Loading.hide()
+          // // 跳转成功页面
+          // location.replace('./success.html')
+        })
+        .catch(error => {
+          Message.show(JSON.stringify(error))
+          Loading.hide()
+          // 检测是不是由于网络问题导致请求失败
+          if (this.checkIsNetworkError()) {
+            this.infiniteGetNetwork().then(_ => {
+              this.publistTo()
+            })
+          }
+        })
+    },
+    publistToServer1() {
+      // 获取值
+      data.contacts = contacts.val()
+      data.files = fileArr.map(item => {
+        return item.file
+      })
+      data.textArea = textArea.val()
+      // 校验
+      const re = /^(1\d{10})|((0\d{2,3}-\d{7,8}))$/u
+
+      if (!data.contacts.trim().length) {
+        Message.show('请输入联系人')
+        return
+      }
+      if (!data.files.length) {
+        Message.show('请上传图片')
+        return
+      }
+      if (!data.textArea.trim().length) {
+        Message.show('请上填写服务内容')
+        return
+      }
+
+      // show loading
+      Loading.show()
+
+      // 创建formData对象
+      const formData = new FormData()
+
+      console.log('提交的数据', data)
+
+      formData.append('name', data.contacts)
+      formData.append('introduce', data.textArea)
+      formData.append('type', 1)
+      formData.append('act', 'add')
+
+      // 将图片对象推送到formData对象里
+      data.files.forEach((file, index) => {
+        formData.append('imgs[]', file, file.name)
+      })
+
+      post({
+        url: `${HOST}/tuiguang/com/quan/quanService.php`,
+        processData: false,
+        contentType: false,
+        data: formData,
+        cookie: true
+      })
+        .then(res => {
           // 发布成功
           Message.show('发布成功')
           Loading.hide()

@@ -66,7 +66,7 @@ $(document).ready(function() {
 
       document.body.addEventListener('touchend', this.touchEnd)
     },
-    touchEnd() {
+    touchEnd(e) {
       touchEndY = e.changedTouches[0].clientY
     },
     touchMove() {

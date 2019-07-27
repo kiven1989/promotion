@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>微信支付-支付</title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+        }
+        h3{
+            text-align: center;
+            padding: 10px;
+        }
+        dl{
+            padding: 10px;
+        }
+        dl dt{
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        dl dd{
+            
+        }
+        dl dd label{
+          display: block;
+          padding: 4px 4px 8px;
+          border-bottom: 1px solid #ccc;
+        }
+        dl dd input{
+            margin-right: 10px;
+        }
+        .pay_btn{
+            display: block;
+            margin: 60px 10px 20px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 4px;
+            background-color:#FE6714;
+            color: #fff;
+        }
+        dl dt{
+          font-size:18px;
+        }
+        dl dt input{
+            margin-right: 10px;
+        }
+        .default_text{
+            font-size: 22px;
+            color:#50a700;
+            padding-left: 10px;
+        }
+    </style>
+   
+  </head>
+  <body>
+    <h3>发布支付</h3>
+    <dl class="dlEle">
+      <dt>请选择置顶时间选择</dt>
+      <dd><label for="day"><input id="day" type="checkbox" name="time" value="38" />一天</label></dd>
+      <dd><label for="week"><input id="week" type="checkbox" name="time" value="100" />一个星期</label></dd>
+      <dd><label for="month"><input id="month" type="checkbox" name="time" value="150" />一个月</label></dd>
+      <dd><label for="year"><input id="year" type="checkbox" name="time" value="200" />一个年</label></dd>
+    </dl>
+    <p class="default_text">默认费用：<strong class="resultMoney">38</strong>元</p>
+    <span class="pay_btn payBtn">
+        立即支付
+    </span>
+    <script type="text/javascript">
+      //调用微信JS api 支付
+      function jsApiCall() {
+        WeixinJSBridge.invoke('getBrandWCPayRequest', '', function(res) {
+          WeixinJSBridge.log(res.err_msg)
+
+          if (res.err_msg == 'get_brand_wcpay_request:ok') {
+            alert('支付成功')
+            window.location.href = 'http://www.qunquntui.com/tuiguang/promotion'
+          } else {
+            //返回跳转到订单详情页面
+            alert('支付失败')
+            window.location.href = 'http://www.qunquntui.com/tuiguang/promotion'
+          }
+        })
+      }
+
+      function callpay() {
+        if (typeof WeixinJSBridge == 'undefined') {
+          if (document.addEventListener) {
+            document.addEventListener('WeixinJSBridgeReady', jsApiCall, false)
+          } else if (document.attachEvent) {
+            document.attachEvent('WeixinJSBridgeReady', jsApiCall)
+            document.attachEvent('onWeixinJSBridgeReady', jsApiCall)
+          }
+        } else {
+          jsApiCall()
+        }
+      }
+      
+      //获取共享地址
+      function editAddress() {
+        WeixinJSBridge.invoke('editAddress', '', function(res) {
+          var value1 = res.proviceFirstStageName
+          var value2 = res.addressCitySecondStageName
+          var value3 = res.addressCountiesThirdStageName
+          var value4 = res.addressDetailInfo
+          var tel = res.telNumber
+
+          //alert(value1 + value2 + value3 + value4 + ":" + tel);
+        })
+      }
+
+      window.onload = function() {
+        if (typeof WeixinJSBridge == 'undefined') {
+          if (document.addEventListener) {
+            document.addEventListener('WeixinJSBridgeReady', editAddress, false)
+          } else if (document.attachEvent) {
+            document.attachEvent('WeixinJSBridgeReady', editAddress)
+            document.attachEvent('onWeixinJSBridgeReady', editAddress)
+          }
+        } else {
+          editAddress()
+        }
+      }
+   </script>
+    <script>
+        const dlEle = document.querySelector('.dlEle')
+        const radios = dlEle.querySelectorAll('input')
+        const resultMoneyEle = document.querySelector('.resultMoney')
+        const payBtn = document.querySelector('.payBtn')
+        const defaultMoney = 38
+        let resultMoney = null
+
+        /*
+         *@author: wangjun
+         *@date: 2019-07-27 10:16:59
+         *@description: 绑定radio的change事件
+        */
+        Array.prototype.slice.call(radios).forEach(item => {
+          item.addEventListener('change', (e) => {
+            resetCheckbox(e.target)
+            setDate(e.target)
+          })
+        })
+        
+        // 重置其它checkbox勾线状态
+        function resetCheckbox(target){
+          radios.forEach(item => {
+            if (item !== target){
+              item.checked = false
+            }
+          })
+        }
+        /*
+         *@author: wangjun
+         *@date: 2019-07-27 11:01:13
+         *@description: 设置钱数
+        */
+        function setDate (target){
+          const choiceMoney = target.value
+          const checked = target.checked
+          resultMoney = defaultMoney
+          if (checked) {
+            resultMoney = defaultMoney * 1 + choiceMoney * 1
+          } else {
+            resultMoney = defaultMoney
+          }
+          resultMoneyEle.innerHTML = resultMoney
+        }
+               
+        /*
+         *@author: wangjun
+         *@date: 2019-07-27 11:01:44
+         *@description: 支付
+        */
+        payBtn.addEventListener('click', () => {
+          alert(`你选择的金额是: ${resultMoney}`)
+          callpay()
+        })
+    </script>
+  </body>
+</html>
